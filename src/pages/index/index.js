@@ -4,7 +4,10 @@ import { connect } from '@tarojs/redux'
 
 import { add, minus, asyncAdd } from '../../actions/counter'
 
-import './index.css'
+import PositionTab from '../../components/position'
+import HeatmapChart from '../../components/chart/HeatmapChart'
+
+import './index.scss'
 
 
 @connect(({ counter }) => ({
@@ -26,6 +29,23 @@ class Index extends Component {
     navigationBarTitleText: '首页'
   }
 
+  componentDidMount() {
+    const chartData = {
+      xAxis: ['1', '2', '3', '4', '5','6','7'],
+      yAxis: ['a', 'b', 'c', 'd', 'v'],
+      data: [
+        [0, 0, 5], [0, 1, 7], [0, 2, 3], [0, 3, 5], [0, 4, 2],
+        [1, 0, 1], [1, 1, 2], [1, 2, 4], [1, 3, 8], [1, 4, 2],
+        [2, 0, 2], [2, 1, 3], [2, 2, 8], [2, 3, 6], [2, 4, 7],
+        [3, 0, 3], [3, 1, 7], [3, 2, 5], [3, 3, 1], [3, 4, 6],
+        [4, 0, 3], [4, 1, 2], [4, 2, 7], [4, 3, 8], [4, 4, 9],
+        [5, 0, 2], [5, 1, 2], [5, 2, 3], [5, 3, 4], [5, 4, 7],
+        [6, 0, 6], [6, 1, 5], [6, 2, 3], [6, 3, 1], [6, 4, 2]
+      ]
+    };
+    this.heatmapChart.refresh(chartData);
+  }
+
   componentWillReceiveProps (nextProps) {
     console.log(this.props, nextProps)
   }
@@ -36,14 +56,12 @@ class Index extends Component {
 
   componentDidHide () { }
 
+  refHeatmapChart = (node) => this.heatmapChart = node
+
   render () {
     return (
       <View className='index'>
-        <Button className='add_btn' onClick={this.props.add}>+</Button>
-        <Button className='dec_btn' onClick={this.props.dec}>-</Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
-        <View><Text>{this.props.counter.num}</Text></View>
-        <View><Text>Hello, World</Text></View>
+        <HeatmapChart ref={this.refHeatmapChart} />
       </View>
     )
   }
