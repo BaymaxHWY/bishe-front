@@ -2,60 +2,53 @@ import Taro, { Component } from "@tarojs/taro";
 import * as echarts from "./ec-canvas/echarts";
 
 function setChartData(chart, data) {
-  let xAxis = data.xAxis
-  let yAxis = data.yAxis
-  let dataValue = data.data
   let option = {
     tooltip: {
     },
-    animation: false,
-    grid: {
-      height: '50%',
-      y: '20%'
-    },
-    xAxis: {
-      type: 'category',
-      data: xAxis,
-      splitArea: {
-        show: true
-      }
-    },
-    yAxis: {
-      type: 'category',
-      data: yAxis,
-      splitArea: {
-        show: true
-      }
-    },
-    visualMap: {
-      min: 0,
-      max: 10,
-      calculable: true,
-      orient: 'horizontal',
-      left: 'center',
-      bottom: '15%',
-      show:false
-    },
-    series: [{
-      type: 'heatmap',
-      data: dataValue,
-      label: {
-        normal: {
-          show: false
+    color: ['#3398DB'],
+    xAxis : [
+      {
+        type: 'category',
+        data: [],
+        axisTick: {
+          alignWithLabel: true
         }
+      }
+    ],
+    dataZoom: [
+      {
+        type: 'slider',
+        start: 0,
+        show: false,
+        end: 50,
       },
-      itemStyle: {
-        emphasis: {
-          shadowBlur: 10,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
+      {
+        type: 'inside',
+        start: 0,
+        end: 50,
+        filterMode: 'filter',
+      },
+    ],
+    yAxis : [
+      {
+        type : 'value'
       }
-    }]
+    ],
+    series : []
   };
+  if (data && data.dimensions && data.measures) {
+    option.xAxis[0].data = data.dimensions.data
+    option.series = data.measures.map(item => {
+      return {
+        ...item,
+        type:'bar',
+      }
+    })
+  }
   chart.setOption(option);
 }
 
-export default class HeatmapChart extends Component {
+export default class MoveChart extends Component {
   config = {
     usingComponents: {
       "ec-canvas": "./ec-canvas/ec-canvas"

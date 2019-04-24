@@ -2,52 +2,24 @@ import Taro, { Component } from "@tarojs/taro";
 import * as echarts from "./ec-canvas/echarts";
 
 function setChartData(chart, data) {
-  let xAxis = data.xAxis
-  let yAxis = data.yAxis
-  let dataValue = data.data
   let option = {
-    tooltip: {
-    },
-    animation: false,
-    grid: {
-      height: '50%',
-      y: '20%'
-    },
-    xAxis: {
-      type: 'category',
-      data: xAxis,
-      splitArea: {
-        show: true
-      }
-    },
-    yAxis: {
-      type: 'category',
-      data: yAxis,
-      splitArea: {
-        show: true
-      }
-    },
-    visualMap: {
-      min: 0,
-      max: 10,
-      calculable: true,
-      orient: 'horizontal',
-      left: 'center',
-      bottom: '15%',
-      show:false
-    },
     series: [{
-      type: 'heatmap',
-      data: dataValue,
+      type: 'tree',
+      initialTreeDepth: -1,
+      name: 'root',
+      data: data,
+      top: '5%',
+      left: '20%',
+      bottom: '2%',
+      right: '15%',
+      symbolSize: 10,
+      symbol: 'circle',
       label: {
         normal: {
-          show: false
-        }
-      },
-      itemStyle: {
-        emphasis: {
-          shadowBlur: 10,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
+          position: 'left',
+          verticalAlign: 'middle',
+          align: 'right',
+          color: 'black'
         }
       }
     }]
@@ -55,7 +27,7 @@ function setChartData(chart, data) {
   chart.setOption(option);
 }
 
-export default class HeatmapChart extends Component {
+export default class TreeChar extends Component {
   config = {
     usingComponents: {
       "ec-canvas": "./ec-canvas/ec-canvas"

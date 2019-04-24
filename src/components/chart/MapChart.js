@@ -1,61 +1,52 @@
 import Taro, { Component } from "@tarojs/taro";
 import * as echarts from "./ec-canvas/echarts";
+import geoJson from '../pages/Map/mapData';
 
 function setChartData(chart, data) {
-  let xAxis = data.xAxis
-  let yAxis = data.yAxis
-  let dataValue = data.data
+  echarts.registerMap('map', geoJson);
   let option = {
     tooltip: {
-    },
-    animation: false,
-    grid: {
-      height: '50%',
-      y: '20%'
-    },
-    xAxis: {
-      type: 'category',
-      data: xAxis,
-      splitArea: {
-        show: true
-      }
-    },
-    yAxis: {
-      type: 'category',
-      data: yAxis,
-      splitArea: {
-        show: true
-      }
+      
     },
     visualMap: {
       min: 0,
-      max: 10,
+      max: 100,
+      left: 'left',
+      top: 'bottom',
       calculable: true,
-      orient: 'horizontal',
-      left: 'center',
-      bottom: '15%',
-      show:false
+      show: false
     },
     series: [{
-      type: 'heatmap',
-      data: dataValue,
+      type: 'map',
+      mapType: 'map',
       label: {
         normal: {
-          show: false
+          show: true
+        },
+        emphasis: {
+          textStyle: {
+            color: '#fff'
+          }
         }
       },
       itemStyle: {
+        normal: {
+          borderColor: '#389BB7',
+          areaColor: '#fff',
+        },
         emphasis: {
-          shadowBlur: 10,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
+          areaColor: '#389BB7',
+          borderWidth: 0
         }
-      }
-    }]
+      },
+      animation: false,
+      data: data
+    }],
   };
   chart.setOption(option);
 }
 
-export default class HeatmapChart extends Component {
+export default class MapChart extends Component {
   config = {
     usingComponents: {
       "ec-canvas": "./ec-canvas/ec-canvas"

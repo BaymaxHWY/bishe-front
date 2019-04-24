@@ -2,60 +2,28 @@ import Taro, { Component } from "@tarojs/taro";
 import * as echarts from "./ec-canvas/echarts";
 
 function setChartData(chart, data) {
-  let xAxis = data.xAxis
-  let yAxis = data.yAxis
-  let dataValue = data.data
+
   let option = {
-    tooltip: {
-    },
-    animation: false,
-    grid: {
-      height: '50%',
-      y: '20%'
-    },
-    xAxis: {
-      type: 'category',
-      data: xAxis,
-      splitArea: {
-        show: true
-      }
-    },
-    yAxis: {
-      type: 'category',
-      data: yAxis,
-      splitArea: {
-        show: true
-      }
-    },
-    visualMap: {
-      min: 0,
-      max: 10,
-      calculable: true,
-      orient: 'horizontal',
-      left: 'center',
-      bottom: '15%',
-      show:false
-    },
-    series: [{
-      type: 'heatmap',
-      data: dataValue,
+    series: {
+      radius: ['15%', '80%'],
+      type: 'sunburst',
+      sort: null,
+      highlightPolicy: 'ancestor',
+      data: data,
       label: {
-        normal: {
-          show: false
-        }
+          rotate: 'radial'
       },
+      levels: [],
       itemStyle: {
-        emphasis: {
-          shadowBlur: 10,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
+          color: '#ddd',
+          borderWidth: 2
       }
-    }]
+  }
   };
   chart.setOption(option);
 }
 
-export default class HeatmapChart extends Component {
+export default class SunburstChart extends Component {
   config = {
     usingComponents: {
       "ec-canvas": "./ec-canvas/ec-canvas"
