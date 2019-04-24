@@ -5,6 +5,7 @@ import { connect } from '@tarojs/redux'
 import { add, minus, asyncAdd } from '../../actions/counter'
 
 import { AtButton } from 'taro-ui'
+import Panle from '../../components/panle'
 
 import './index.scss'
 import { func } from 'prop-types';
@@ -58,9 +59,10 @@ class Index extends Component {
 
   render () {
     let url = '/pages/exhibition/index' + `?position=` + this.state.selectorChecked
+    let title = '语言选择'
     return (
       <View className='page-section'>
-            <Text className='page-title'>语言选择</Text>
+            <Panle title={title}/>
             <Picker mode='selector' range={this.state.position} onChange={this.onChange}>
             <View className='picker'>
                   <Text>当前选择：</Text>
