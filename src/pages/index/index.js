@@ -1,29 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Picker  } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-
-import { add, minus, asyncAdd } from '../../actions/counter'
-
 import { AtButton } from 'taro-ui'
 import Panle from '../../components/panle'
+import api from '../../service/api'
 
 import './index.scss'
-import { func } from 'prop-types';
 
 
-@connect(({ counter }) => ({
-  counter
-}), (dispatch) => ({
-  add () {
-    dispatch(add())
-  },
-  dec () {
-    dispatch(minus())
-  },
-  asyncAdd () {
-    dispatch(asyncAdd())
-  }
-}))
 class Index extends Component {
 
   constructor() {
@@ -34,8 +17,23 @@ class Index extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
+  componentDidMount() {
+    this.fetchPosition()
+  }
+
+  fetchPosition() {
+    let that = this
+    let url = 'language'
+    api.get(url).then((res) => {
+      let position = [], data = res.data.data
+      for(let i = 0; i < data.length; i++){
+        position[i] = data[i].Name
+      }
+      that.setState({
+        position: position,
+        selectorChecked: position[0]
+      })
+    })
   }
 
   componentWillUnmount () { }

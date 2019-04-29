@@ -12,7 +12,7 @@ function setChartData(chart, data) {
         data: [],
         axisTick: {
           alignWithLabel: true
-        }
+        },
       }
     ],
     dataZoom: [
