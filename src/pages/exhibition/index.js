@@ -37,7 +37,6 @@ export default class Exhibition extends Component {
             isloading: false,
           })
         }
-        
       }
 
       fetchCity() {
