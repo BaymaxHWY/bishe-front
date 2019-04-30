@@ -5,7 +5,7 @@ import { baseUrl } from './config'
 export default {
     baseOptions(params, method = 'GET') {
         let {url, data} = params
-        console.log('params', params)
+        // console.log('params', params)
         let contentType = 'application/json'
         contentType = params.contentType || contentType
         const option = {

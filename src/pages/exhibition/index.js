@@ -54,7 +54,9 @@ export default class Exhibition extends Component {
         let url = 'salary/' + this.state.language
         api.get(url).then((res) => {
           let data = res.data.data, k = data.length - 1
-          while(data[k--].Num == 0) data.length--
+          while(data[k--].Num < 10) data.length--
+          console.log(data)
+          console.log(data.length)
           that.setState({
             salary: data
           })

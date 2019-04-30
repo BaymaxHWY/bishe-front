@@ -78,7 +78,7 @@ class Index extends Component {
 
   render () {
     let url = '/pages/exhibition/index' + `?position=` + this.state.selectorChecked
-    let title1 = '语言选择', title2 = '总览'
+    let title1 = '语言选择', title2 = '总览', title3 = '参考数据量', dataSum = 6149
     return (
       <View className='page-section'>
             <Panle title={title1}/>
@@ -92,6 +92,11 @@ class Index extends Component {
             <Panle title={title2}/>
             <View className="pie-chart">
               <PieChart ref={this.refPieChart} />
+            </View>
+            <Panle title={title3}/>
+            <View className='picker'>
+                  <Text>已爬取数据：</Text>
+                  <Text>{dataSum}条</Text>
             </View>
       </View>
     )

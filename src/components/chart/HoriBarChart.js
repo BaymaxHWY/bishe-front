@@ -7,7 +7,8 @@ function setChartData(chart, data) {
     },
     color: ['#3398DB'],
     grid: {
-      containLabel: true
+      containLabel: true,
+      left: '1%'
     },
     xAxis : [
       {
