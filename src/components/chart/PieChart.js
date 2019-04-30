@@ -3,12 +3,25 @@ import * as echarts from "./ec-canvas/echarts";
 
 function setChartData(chart, data) {
   let option = {
+    tooltip : {
+      trigger: 'item',
+      formatter: "{a} {b} : {c} ({d}%)"
+    },
+    legend: {
+      type: 'scroll',
+      orient: 'vertical',
+      data: data.legendData,
+      right: 10,
+      top: 30,
+      bottom: 20,
+      selected: data.selected
+    },
     series : [
       {
-        name: '访问来源',
+        name: '',
         type: 'pie',
-        center: ['50%', '50%'],
-        radius: [0, '60%'],
+        center: ['40%', '50%'],
+        radius: [0, '50%'],
         data: data,
         itemStyle: {
           emphasis: {

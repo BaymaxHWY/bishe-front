@@ -3,6 +3,7 @@ import { View, Picker  } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 import Panle from '../../components/panle'
 import api from '../../service/api'
+import PieChart from "../../components/chart/PieChart";
 
 import './index.scss'
 
@@ -13,12 +14,29 @@ class Index extends Component {
     super()
     this.state = {
       position: ['Golang', 'PHP', 'C++'],
-      selectorChecked: 'Golang'
+      selectorChecked: 'Golang',
+      data: '',
     }
+  }
+
+  config = {
+    navigationBarTitleText: "首页"
   }
 
   componentDidMount() {
     this.fetchPosition()
+  }
+
+  componentDidUpdate() {
+    let chartData = []
+    let data = this.state.data
+    for(let i = 0; i < data.length; i++){
+      chartData[i] = {
+        name: data[i].Name,
+        value: data[i].Num,
+      }
+    }
+    this.pieChart.refresh(chartData)
   }
 
   fetchPosition() {
@@ -31,7 +49,8 @@ class Index extends Component {
       }
       that.setState({
         position: position,
-        selectorChecked: position[0]
+        selectorChecked: position[0],
+        data: data
       })
     })
   }
@@ -55,12 +74,14 @@ class Index extends Component {
     })
   }
 
+  refPieChart = (node) => this.pieChart = node
+
   render () {
     let url = '/pages/exhibition/index' + `?position=` + this.state.selectorChecked
-    let title = '语言选择'
+    let title1 = '语言选择', title2 = '总览'
     return (
       <View className='page-section'>
-            <Panle title={title}/>
+            <Panle title={title1}/>
             <Picker mode='selector' range={this.state.position} onChange={this.onChange}>
             <View className='picker'>
                   <Text>当前选择：</Text>
@@ -68,6 +89,10 @@ class Index extends Component {
             </View>
             </Picker>
             <AtButton onClick={(e)=> this.handleClick(url, e)} circle={true} className='bt-sure'>确定</AtButton>
+            <Panle title={title2}/>
+            <View className="pie-chart">
+              <PieChart ref={this.refPieChart} />
+            </View>
       </View>
     )
   }

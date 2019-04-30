@@ -32,6 +32,12 @@ export default class Exhibition extends Component {
         this.setMoveChart(this.state.salary, this.SalaryChart)
         this.setMoveChart(this.state.city, this.CityChart)
         this.setMoveChart(this.state.company, this.CompanyChart, 10)
+        if(this.state.isloading) {
+          this.setState({
+            isloading: false,
+          })
+        }
+        
       }
 
       fetchCity() {
@@ -39,7 +45,6 @@ export default class Exhibition extends Component {
         let url = 'city/' + this.state.language
         api.get(url).then((res) => {
           that.setState({
-            isloading: false,
             city: res.data.data
           })
         })
@@ -49,9 +54,10 @@ export default class Exhibition extends Component {
         let that = this
         let url = 'salary/' + this.state.language
         api.get(url).then((res) => {
+          let data = res.data.data, k = data.length - 1
+          while(data[k--].Num == 0) data.length--
           that.setState({
-            isloading: false,
-            salary: res.data.data
+            salary: data
           })
         })
       }
@@ -61,7 +67,6 @@ export default class Exhibition extends Component {
         let url = 'company/' + this.state.language
         api.get(url).then((res) => {
           that.setState({
-            isloading: false,
             company: res.data.data
           })
         })
