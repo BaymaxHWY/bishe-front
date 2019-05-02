@@ -1,9 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Picker  } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+import { AtButton, AtTabBar  } from 'taro-ui'
 import Panle from '../../components/panle'
 import api from '../../service/api'
-import PieChart from "../../components/chart/PieChart";
+import PieChart from "../../components/chart/PieChart"
 
 import './index.scss'
 
@@ -16,6 +16,7 @@ class Index extends Component {
       position: ['Golang', 'PHP', 'C++'],
       selectorChecked: 'Golang',
       data: '',
+      current: 0,
     }
   }
 
@@ -68,6 +69,13 @@ class Index extends Component {
       })
   }
 
+  handleClickRe(url, event) {
+    console.log(url)
+      Taro.redirectTo({
+        url: url
+      })
+  }
+
   onChange = e => {
     this.setState({
       selectorChecked: this.state.position[e.detail.value]
@@ -78,10 +86,11 @@ class Index extends Component {
 
   render () {
     let url = '/pages/exhibition/index' + `?position=` + this.state.selectorChecked
-    let title1 = '语言选择', title2 = '总览', title3 = '参考数据量', dataSum = 6149
+    let compareUrl = '/pages/compare/index'
+    let dataSum = 6149
     return (
       <View className='page-section'>
-            <Panle title={title1}/>
+            <Panle title='语言选择'/>
             <Picker mode='selector' range={this.state.position} onChange={this.onChange}>
             <View className='picker'>
                   <Text>当前选择：</Text>
@@ -89,15 +98,25 @@ class Index extends Component {
             </View>
             </Picker>
             <AtButton onClick={(e)=> this.handleClick(url, e)} circle={true} className='bt-sure'>确定</AtButton>
-            <Panle title={title2}/>
+            <Panle title='总览'/>
             <View className="pie-chart">
               <PieChart ref={this.refPieChart} />
             </View>
-            <Panle title={title3}/>
+            <Panle title='参考数据量'/>
             <View className='picker'>
                   <Text>已爬取数据：</Text>
                   <Text>{dataSum}条</Text>
             </View>
+            <AtTabBar
+              fixed
+              tabList={[
+                { title: '数据展示', iconType: 'home' },
+                { title: '数据比较', iconType: 'list' },
+                // { title: '文件夹', iconType: 'folder', text: '100', max: '99' }
+              ]}
+              onClick={(e)=> this.handleClickRe(compareUrl, e)}
+              current={this.state.current}
+            />
       </View>
     )
   }

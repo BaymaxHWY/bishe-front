@@ -1,11 +1,9 @@
 @import "~taro-ui/dist/style/components/tab-bar.scss";
 @import "~taro-ui/dist/style/components/badge.scss";
 @import "~taro-ui/dist/style/components/icon.scss";
+@import "~taro-ui/dist/style/components/toast.scss";
+@import "~taro-ui/dist/style/components/icon.scss";
 
-.index {
-    width: 100%;
-    height: 100vh;
-}
 .page-section{
     margin: .68267rem 0 1.19467rem;
 }
@@ -30,7 +28,13 @@
     width: 60%
 }
 
-.pie-chart {
+.move-chart {
     width: 100%;
-    height: 50vh;
-  }
+    height: 56%;
+    padding-bottom: 5%;
+    padding-top: 5%;
+}
+
+.container {
+    height: 100vh;
+}

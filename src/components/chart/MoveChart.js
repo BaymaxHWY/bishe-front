@@ -4,6 +4,10 @@ import * as echarts from "./ec-canvas/echarts";
 function setChartData(chart, data) {
   let option = {
     tooltip: {
+      trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+      }
     },
     color: ['#3398DB'],
     xAxis : [
@@ -15,6 +19,13 @@ function setChartData(chart, data) {
         },
       }
     ],
+    grid: {
+      left: '1%',
+      right: '5%',
+      bottom: '6%',
+      top: '10%',
+      containLabel: true
+    },
     dataZoom: [
       {
         type: 'slider',
@@ -31,7 +42,8 @@ function setChartData(chart, data) {
     ],
     yAxis : [
       {
-        type : 'value'
+        type : 'value',
+        boundaryGap: [0, 0.01],
       }
     ],
     series : []

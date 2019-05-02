@@ -4,23 +4,29 @@ import * as echarts from "./ec-canvas/echarts";
 function setChartData(chart, data) {
   let option = {
     tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+          type: 'shadow'
+      }
     },
-    color: ['#3398DB'],
-    xAxis : [
-      {
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    legend: [{
+      data: []
+    }],
+    xAxis: [{
         type: 'category',
         data: [],
-        axisTick: {
-          alignWithLabel: true
-        }
-      }
-    ],
-    yAxis : [
-      {
-        type : 'value'
-      }
-    ],
-    series : []
+    }],
+    yAxis: [{
+        type: 'value',
+        boundaryGap: [0, 0.01],
+    }],
+    series: []
   };
   if (data && data.dimensions && data.measures) {
     option.xAxis[0].data = data.dimensions.data

@@ -1,15 +1,13 @@
 import Taro, { Component } from "@tarojs/taro";
 import * as echarts from "./ec-canvas/echarts";
-
 function setChartData(chart, data) {
   let option = {
     tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-          type: 'shadow'
-      }
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
     },
-    color: ['#3398DB'],
     grid: {
       left: '1%',
       right: '5%',
@@ -17,22 +15,23 @@ function setChartData(chart, data) {
       top: '10%',
       containLabel: true
     },
-    xAxis : [
-      {
+    legend: [{
+      data: []
+    }],
+    xAxis: {
         type: 'value',
-        boundaryGap: [0, 0.01],
-      }
-    ],
-    yAxis : [
-      {
-        type : 'category',
+        boundaryGap: [0, 0.01]
+    },
+    yAxis: [{
+        type: 'category',
         data: [],
-      }
-    ],
-    series : []
-  };
+    }],
+    series: []
+  }
   if (data && data.dimensions && data.measures) {
     option.yAxis[0].data = data.dimensions.data
+    option.legend[0].data = data.legend.data
+    // console.log('option', option)
     option.series = data.measures.map(item => {
       return {
         ...item,
@@ -43,7 +42,7 @@ function setChartData(chart, data) {
   chart.setOption(option);
 }
 
-export default class PieChart extends Component {
+export default class AddChart extends Component {
   config = {
     usingComponents: {
       "ec-canvas": "./ec-canvas/ec-canvas"

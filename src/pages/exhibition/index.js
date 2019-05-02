@@ -20,7 +20,7 @@ export default class Exhibition extends Component {
         }
       }
       config = {
-          navigationBarTitleText: "招聘数据"
+          navigationBarTitleText: '招聘数据'
       }
 
       componentDidMount() {
@@ -31,7 +31,7 @@ export default class Exhibition extends Component {
       componentDidUpdate() {
         this.setMoveChart(this.state.salary, this.SalaryChart)
         this.setMoveChart(this.state.city, this.CityChart)
-        this.setMoveChart(this.state.company, this.CompanyChart, 10)
+        this.setMoveChart(this.state.company, this.CompanyChart, 15)
         if(this.state.isloading) {
           this.setState({
             isloading: false,
@@ -53,10 +53,10 @@ export default class Exhibition extends Component {
         let that = this
         let url = 'salary/' + this.state.language
         api.get(url).then((res) => {
-          let data = res.data.data, k = data.length - 1
-          while(data[k--].Num < 10) data.length--
+          let data = res.data.data// , k = data.length - 1
+          /* while(data[k--].Num < 10) data.length--
           console.log(data)
-          console.log(data.length)
+          console.log(data.length) */
           that.setState({
             salary: data
           })

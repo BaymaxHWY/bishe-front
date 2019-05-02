@@ -23,6 +23,7 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/exhibition/index',
+      'pages/compare/index',
     ],
     window: {
       backgroundTextStyle: 'light',
