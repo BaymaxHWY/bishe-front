@@ -16,6 +16,7 @@ class Index extends Component {
       position: ['Golang', 'PHP', 'C++'],
       selectorChecked: 'Golang',
       data: '',
+      dataSum: 0,
       current: 0,
     }
   }
@@ -44,14 +45,18 @@ class Index extends Component {
     let that = this
     let url = 'language'
     api.get(url).then((res) => {
-      let position = [], data = res.data.data
+      let position = [], dataSum = 0, data = res.data.data
+
       for(let i = 0; i < data.length; i++){
         position[i] = data[i].Name
+        dataSum += data[i].Num
       }
+
       that.setState({
         position: position,
         selectorChecked: position[0],
-        data: data
+        data: data,
+        dataSum: dataSum,
       })
     })
   }
