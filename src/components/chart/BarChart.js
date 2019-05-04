@@ -30,6 +30,7 @@ function setChartData(chart, data) {
   };
   if (data && data.dimensions && data.measures) {
     option.xAxis[0].data = data.dimensions.data
+    option.legend[0].data = data.legend.data
     option.series = data.measures.map(item => {
       return {
         ...item,

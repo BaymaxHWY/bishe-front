@@ -1,0 +1,17 @@
+@import "~taro-ui/dist/style/components/article.scss";
+
+.move-chart {
+    width: 100%;
+    height: 60vh;
+    padding-bottom: 5%;
+}
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+}
+.an-chart {
+    margin-top: 3%;
+}

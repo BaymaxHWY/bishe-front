@@ -90,9 +90,8 @@ class Index extends Component {
   refPieChart = (node) => this.pieChart = node
 
   render () {
-    let url = '/pages/exhibition/index' + `?position=` + this.state.selectorChecked
+    let url = '/pages/selection/index' + `?position=` + this.state.selectorChecked
     let compareUrl = '/pages/compare/index'
-    let dataSum = 6149
     return (
       <View className='page-section'>
             <Panle title='语言选择'/>

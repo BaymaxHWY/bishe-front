@@ -12,7 +12,7 @@ function setChartData(chart, data) {
       left: '1%',
       right: '5%',
       bottom: '6%',
-      top: '10%',
+      top: '15%',
       containLabel: true
     },
     legend: [{

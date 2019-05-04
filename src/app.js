@@ -24,6 +24,10 @@ class App extends Component {
       'pages/index/index',
       'pages/exhibition/index',
       'pages/compare/index',
+      'pages/analysis/citycompany',
+      'pages/analysis/workyearsalary',
+      'pages/analysis/financesalary',
+      'pages/selection/index'
     ],
     window: {
       backgroundTextStyle: 'light',
