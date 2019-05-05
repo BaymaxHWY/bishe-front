@@ -12,6 +12,7 @@ export default class CityCompany extends Component {
         this.state = {
           language: this.$router.params.language,
           cityCompany: '',
+          cityOrder: '',
         }
       }
       config = {
@@ -29,15 +30,29 @@ export default class CityCompany extends Component {
         let that = this
         let url = 'citycompany/' + this.state.language
         api.get(url).then((res) => {
+          let citySort = this.citySort(res.data.data)
           that.setState({
-            cityCompany: res.data.data
+            cityCompany: res.data.data,
+            cityOrder: citySort,
           })
         })
       }
 
+      citySort(data) {
+        let cityOrder = []
+        for(let i = 0; i < data.length; i++) {
+          cityOrder[i] = {
+            name: data[i].Name,
+            value: data[i].Num1
+          }
+        }
+        cityOrder.sort((a, b) => a.value - b.value)
+        return cityOrder
+      }
+
       setMoveChart(data, chart) {
-        let legend1 = this.state.language + '工程师职位个数'
-        let legend2 = '招聘' + this.state.language + '工程师的公司个数'
+        let legend1 = this.state.language + ' 工程师职位个数'
+        let legend2 = '招聘 ' + this.state.language + ' 工程师的公司个数'
         let Name = [], Num1 = [], Num2 = []
         for(let i = 0; i < data.length; i++) {
           Name[i] = data[i].Name
@@ -71,6 +86,25 @@ export default class CityCompany extends Component {
       refcityCompanyChart = (node) => this.cityCompanyChart = node
     
       render() {
+        let maxcity1, maxcity2, maxcity3, mincity1, mincity2, maxInAll, lessStea
+        if(this.state.cityOrder != '') {
+          let len = this.state.cityOrder.length
+          let a = 0, b = this.state.cityOrder[len-1].value + this.state.cityOrder[len-2].value + this.state.cityOrder[len-3].value
+          for(let i = 0; i < len; i++) {
+            a += this.state.cityOrder[i].value
+          }
+          maxInAll = (b / a) * 100
+          maxInAll = maxInAll.toFixed(2) 
+          maxcity1 = this.state.cityOrder[len-1].name
+          maxcity2 = this.state.cityOrder[len-2].name
+          maxcity3 = this.state.cityOrder[len-3].name
+          mincity1 = this.state.cityOrder[0].name
+          mincity2 = this.state.cityOrder[1].name
+          if(this.state.cityOrder[0].value <= 100 && this.state.cityOrder[1].value <= 100) {
+            lessStea = '招聘岗位数量较少的城市：' + mincity1 + '、' + mincity2
+          }
+        }
+        
         return (
           <View className='container'>
             {loading}
@@ -80,8 +114,14 @@ export default class CityCompany extends Component {
             </View>
             <View className="at-article">
               <Panle title='数据描述'/>
-              <View className='at-article__p'>
-                从图中可以看出，招聘岗位数量最多的前五名分别为北京、上海、深圳、杭州、广州（排名分先后），占职位总数的83%。其中，北京在xxx岗位开放的职位数量和公司数量都远远多于其他城市，职位数量差不多是上海的2倍，深圳的3倍，杭州、广州的5倍，公司数量差不多是上海的2倍，深圳的3倍，杭州、广州的4倍。杭州和广州在数据分析岗位开放的职位数量和公司数量基本持平。
+              <View className='at-article__h3'>
+                从图中可以看出。
+              </View>
+              <View className='at-article__h3'>
+                招聘岗位数量较多的城市: {maxcity1}、{maxcity2}、{maxcity3}，占职位总数的{maxInAll}%。
+              </View>
+              <View className='at-article__h3'>
+                {lessStea}
               </View>
             </View>
           </View>

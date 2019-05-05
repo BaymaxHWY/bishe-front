@@ -65,9 +65,44 @@ export default class FinanceSalary extends Component {
         chart.refresh(chartData)
       }
 
+      financeSort(data) {
+        let finance = [], list = []
+        for(let i = 0; i < data[0].Data.length; i++) {
+          list[i] = data[0].Data[i].Name
+          finance[i] = 0
+        }
+        // console.log('list:', list)
+        for(let i = 0; i < data.length; i++) {
+          for(let j = 0; j < data[i].Data.length; j++) {
+            finance[j] += data[i].Data[j].Num
+          }
+        }
+        let res = []
+        for(let i = 0; i < finance.length; i++) {
+          res [i] = {
+            name: list[i],
+            value: finance[i],
+          }
+        }
+        res.sort((a, b) => a.value - b.value)
+        console.log(res)
+        return res
+      }
+
       reffinanceSalaryChart = (node) => this.financeSalaryChart = node
     
       render() {
+        let maxFinance1, maxFinance2, maxFinance3, minFinance1, minFinance2
+        if(this.state.financeSalary != '') {
+          let financeSort = this.financeSort(this.state.financeSalary)
+          let len = financeSort.length
+          maxFinance1 = financeSort[len-1].name
+          maxFinance2 = financeSort[len-2].name
+          maxFinance3 = financeSort[len-3].name
+          minFinance1 = financeSort[0].name
+          minFinance2 = financeSort[1].name
+        }
+
         return (
           <View className='container'>
             {loading}
@@ -78,7 +113,7 @@ export default class FinanceSalary extends Component {
             <View className="at-article">
               <Panle title='数据描述'/>
               <View className='at-article__p'>
-              一眼望去，上市公司作为行业的领头羊，对数据分析岗位的需求数量与薪资水平要明显高于其他发展阶段公司，职位数量差不多是成熟型（D轮及以上）的2倍。成长型（B轮）与成熟型（不需要融资）对数据分析岗位的需求数量与薪资水平相差无几。紧随其后的成长型（不需要融资）、成长型（A轮）、初创型（未融资）与成熟型（C轮）都有着相差不多的岗位数量需求。而初创型（天使轮）与初创型（不需要融资）对数据分析岗位的需求数量与薪资水平就要相对较低了。不过我们可以发现，在互联网企业，薪资高于30K也算是一个相对普遍的现象了，怪不得有人说20K是白菜价呢（偷笑）。而且成长型公司对数据分析岗位的需求数量还是蛮多的，给出的薪资也很不错呢！
+                从图中可以看出。[{maxFinance1}、{maxFinance2}、{maxFinance3}] 等情况的公司招聘需要较高。相较之下[{minFinance1}、{minFinance2}]中的公司招聘需求较低。
               </View>
             </View>
           </View>

@@ -65,9 +65,43 @@ export default class WorkYearSalary extends Component {
         chart.refresh(chartData)
       }
 
+      getMaxWorkYear(data) {
+        let workYear = [], list = []
+        for(let i = 0; i < data[0].Data.length; i++) {
+          list[i] = data[0].Data[i].Name
+          workYear[i] = 0
+        }
+        for(let i = 0; i < data.length; i++) {
+          for(let j = 0; j < data[i].Data.length; j++) {
+            workYear[j] += data[i].Data[j].Num
+          }
+        }
+        let res = list[0], num = workYear[0]
+        for(let i = 1; i < workYear.length; i++) {
+          if(workYear[i] > num) {
+            num = workYear[i]
+            res = list[i]
+          }
+        }
+        return res
+      }
+
       refworkYearSalaryChart = (node) => this.workYearSalaryChart = node
     
       render() {
+        let maxWorkyear, highSalary
+        if(this.state.workYearSalary != '') {
+          let data = this.state.workYearSalary
+          maxWorkyear = this.getMaxWorkYear(data)
+          let num = data[2].Data[0].Num
+          highSalary = data[2].Data[0].Name
+          for(let i = 0; i < data[2].Data.length; i++) {
+            if(num < data[2].Data[i].Num) {
+              num = data[2].Data[i].Num
+              highSalary = data[2].Data[i].Name
+            }
+          }
+        }
         return (
           <View className='container'>
             {loading}
@@ -78,7 +112,7 @@ export default class WorkYearSalary extends Component {
             <View className="at-article">
               <Panle title='数据描述'/>
               <View className='at-article__p'>
-              总体看来，大部分企业对应聘者的工作资历要求都在1-5年，且工作资历在3-5年的更有可能获得高薪资30K以上，平均职位数量也最多。而工作资历在1-3年的，薪资主要分布于6K-25K，平均职位数量也相对较多，只比工作资历在3-5年的少一丢丢呢。工作资历在5年以上的招聘数量较少，可能是因为大部分企业不会有如此高的资历限制或很多的专家需求。而工作资历低于一年的求职者与应届毕业生因为工作经验不足，所以企业的认可度可能相对较低，招聘数量也比较少。
+              总体看来，大部分企业对应聘者的工作资历要求都在{maxWorkyear}，且工作资历在{highSalary}的更有可能获得高薪资20k以上。
               </View>
             </View>
           </View>
